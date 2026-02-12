@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاعُل</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="preloader">
+    <div class="loader-content">
+        <img src="logo.png" alt="شعار تفاعل" class="loader-logo">
+        <div class="loader-line"></div>
+    </div>
+</div>
+    <header class="main-header">
+        <img src="logo.png" alt="شعار تفاعل" class="logo">
+    </header>
+
+    <div class="tabs-bar">
+        <button class="tab-btn active" id="btn-creation">تكوين تفاعلات</button>
+        <button class="tab-btn" id="btn-ready">موسوعة التفاعلات</button>
+    </div>
+
+    <div class="container">
+        <div id="creation-tab" class="tab-content active">
+            <div class="main-layout">
+                <div class="sidebar">
+                    <h2>المواد المتاحة</h2>
+                    <div class="category">
+                        <h3>🧪 العناصر</h3>
+                        <div id="elements-list"></div>
+                    </div>
+                    <div class="category">
+                        <h3>⚗️ المركبات</h3>
+                        <div id="compounds-list"></div>
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="drop-zone" id="dropZone">اسحب المواد هنا أو انقر عليها</div>
+                    <div class="result-panel" id="resultPanel">
+                        <h3>نتيجة المختبر</h3>
+                        <p><strong>المعادلة:</strong> <span id="eq-text">-</span></p>
+                        <p><strong>النوع:</strong> <span id="type-text">-</span></p>
+                        <p><strong>الشرح:</strong> <span id="desc-text">-</span></p>
+                        <button class="reset-btn" onclick="resetApp()">إعادة ضبط</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ready-tab" class="tab-content">
+            <div class="ready-reactions-container" id="readyReactions">
+                </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
