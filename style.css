@@ -283,4 +283,22 @@ button {
 .preloader-hidden {
     opacity: 0;
     visibility: hidden;
+
+}
+
+.clickable-tag {
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.clickable-tag:hover {
+    background: #ff4b2b; /* يتغير للون أحمر خفيف عند الرغبة في الحذف */
+    color: white;
+    transform: scale(1.1);
+}
+
+.clickable-tag:hover::after {
+    content: ' ✕'; /* ظهور علامة إغلاق صغيرة */
+    font-size: 0.8rem;
 }
