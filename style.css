@@ -283,9 +283,7 @@ button {
 .preloader-hidden {
     opacity: 0;
     visibility: hidden;
-
 }
-
 .clickable-tag {
     cursor: pointer;
     position: relative;
