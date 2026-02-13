@@ -6,8 +6,8 @@ const chemicalsData = {
         { id: 'Na', label: 'صوديوم' }, { id: 'O2', label: 'أكسجين' }
     ],
     compounds: [
-        { id: 'HCl', label: 'حمض HCl' }, { id: 'H2SO4', label: 'حمض H₂SO₄' },
-        { id: 'HNO3', label: 'حمض HNO₃' }, { id: 'NaOH', label: 'هيدروكسيد الصوديوم' },
+        { id: 'HCl', label: 'حمض الهيدروكلوريك' }, { id: 'H2SO4', label: 'حمض الكبريتيك' },
+        { id: 'HNO3', label: 'حمض النيرتيك' }, { id: 'NaOH', label: 'هيدروكسيد الصوديوم' },
         { id: 'CaCO3', label: 'كربونات الكالسيوم' }, { id: 'NH3', label: 'أمونيا' },
         { id: 'H2O', label: 'ماء' }, { id: 'CO2', label: 'ثاني أكسيد الكربون' }
     ]
@@ -34,6 +34,9 @@ const reactions = [
     { reactants: ['Fe', 'H2SO4'], equation: 'Fe + H₂SO₄ → FeSO₄ + H₂↑', type: 'تفاعل إحلال بسيط', desc: 'ينتج كبريتات الحديد II وغاز الهيدروجين.' },
 { reactants: ['Al', 'HCl'], equation: '2Al + 6HCl → 2AlCl₃ + 3H₂↑', type: 'تفاعل إحلال بسيط', desc: 'تفاعل سريع جداً بعد ثوانٍ من وضع الألمنيوم (بسبب طبقة الأكسيد الحامية).' },
 { reactants: ['Na', 'H2O'], equation: '2Na + 2H₂O → 2NaOH + H₂↑', type: 'تفاعل إزاحة عنيف', desc: 'يتفاعل الصوديوم مع الماء بشدة وقد يشتعل الغاز الناتج تلقائياً.' },
+{ reactants: ['Na', 'HCl'], equation: '2Na + 2HCl → 2NaCl + H₂↑', type: 'تفاعل إزاحة عنيف', desc: 'تفاعل عنيف جداُ، حيث يزيح الصوديوم الهيدروجين الموجود في حمض الهيدروكلوريك مشكلا ملح كلوريد الصوديوم ويتصاعد غاز الهيدروجين.' },
+{ reactants: ['Na', 'H2SO4'], equation: '2Na + H₂SO₄ → Na₂SO₄ + H₂↑', type: 'تفاعل إزاحة عنيف', desc: 'تفاعل عنيف جداُ، حيث يزيح الصوديوم الهيدروجين الموجود في حمض الكبريتيك مشكلا ملح كبريتات الصوديوم ويتصاعد غاز الهيدروجين ويعطي التفاعل لهبًا أصفر مميزاً.' },
+{ reactants: ['Na', 'HNO3'], equation: '2Na + 2HNO₃ → 2NaNO₃ + H₂↑', type: 'تفاعل إزاحة عنيف', desc: 'تفاعل عنيف جداُ، حيث يزيح الصوديوم الهيدروجين الموجود في حمض النيتريك مشكلا ملح نترات الصوديوم ويتصاعد غاز الهيدروجين.' },
 { reactants: ['Cu', 'HNO3'], equation: 'Cu + 4HNO₃(conc) → Cu(NO₃)₂ + 2NO₂ + 2H₂O', type: 'أكسدة واختزال', desc: 'النحاس لا يزيح الهيدروجين، لكنه يتفاعل مع حمض النيتريك المركز كعامل مؤكسد وينتج غازاً بنياً.' },
 { reactants: ['CaCO3', 'HCl'], equation: 'CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑', type: 'تفاعل إحلال مزدوج', desc: 'يحدث فوران شديد نتيجة تصاعد غاز ثاني أكسيد الكربون.' },
 { reactants: ['CaCO3', 'H2SO4'], equation: 'CaCO₃ + H₂SO₄ → CaSO₄ + H₂O + CO₂↑', type: 'تفاعل إحلال مزدوج', desc: 'يتكون كبريتات الكالسيوم (الجبس) وثاني أكسيد الكربون.' },
@@ -45,11 +48,19 @@ const reactions = [
 { reactants: ['CH4', 'O2'], equation: 'CH₄ + 2O₂ → CO₂ + 2H₂O', type: 'أكسدة واختزال', desc: 'تفاعل طارد للحرارة ينتج عنه ثاني أكسيد الكربون وبخار ماء.' },
 { reactants: ['Fe', 'O2'], equation: '4Fe + 3O₂ → 2Fe₂O₃', type: 'تأكسد', desc: 'تفاعل الحديد مع الأكسجين في وجود الرطوبة يكوّن الصدأ.' },
 { reactants: ['H2O', 'CO2'], equation: 'CO₂ + H₂O ⇌ H₂CO₃', type: 'تفاعل ذوبان', desc: 'ذوبان ثاني أكسيد الكربون في الماء يكوّن حمض الكربونيك الضعيف.' }
-];
 
+];
 let selectedChemicals = [];
 
-// 2. منطق التبويبات
+// 2. شاشة التحميل (Preloader)
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    setTimeout(() => {
+        if (preloader) preloader.classList.add('preloader-hidden');
+    }, 2000);
+});
+
+// 3. إدارة التبويبات
 document.getElementById('btn-creation').onclick = function() { switchTab('creation-tab', this); };
 document.getElementById('btn-ready').onclick = function() { 
     switchTab('ready-tab', this); 
@@ -63,13 +74,21 @@ function switchTab(tabId, btn) {
     btn.classList.add('active');
 }
 
-// 3. بناء واجهة المختبر (التبويب الأول)
+// 4. بناء القائمة الجانبية ودعم السحب المعاكس
 function init() {
     const elList = document.getElementById('elements-list');
     const compList = document.getElementById('compounds-list');
-    
+    const sidebar = document.querySelector('.sidebar');
+
     chemicalsData.elements.forEach(c => elList.appendChild(createChemHTML(c)));
     chemicalsData.compounds.forEach(c => compList.appendChild(createChemHTML(c)));
+
+    // دعم إرجاع العناصر بالسحب فوق السايدبار
+    sidebar.ondragover = (e) => e.preventDefault();
+    sidebar.ondrop = (e) => {
+        const id = e.dataTransfer.getData('text');
+        removeChemical(id);
+    };
 }
 
 function createChemHTML(c) {
@@ -82,7 +101,7 @@ function createChemHTML(c) {
     return div;
 }
 
-// 4. منطق التفاعل (السحب والإفلات والنقر)
+// 5. منطق منطقة التفاعل (الإضافة والحذف)
 const dropZone = document.getElementById('dropZone');
 dropZone.ondragover = (e) => e.preventDefault();
 dropZone.ondrop = (e) => { addChemical(e.dataTransfer.getData('text')); };
@@ -90,9 +109,32 @@ dropZone.ondrop = (e) => { addChemical(e.dataTransfer.getData('text')); };
 function addChemical(id) {
     if (selectedChemicals.length < 2 && !selectedChemicals.includes(id)) {
         selectedChemicals.push(id);
-        dropZone.innerHTML = selectedChemicals.map(c => `<span class="chemical-tag">${c}</span>`).join(' + ');
+        updateDropZoneUI();
         if (selectedChemicals.length === 2) checkReaction();
     }
+}
+
+// وظيفة حذف المادة وإرجاعها
+function removeChemical(id) {
+    selectedChemicals = selectedChemicals.filter(item => item !== id);
+    updateDropZoneUI();
+    if (selectedChemicals.length < 2) {
+        document.getElementById('resultPanel').style.display = 'none';
+        dropZone.style.borderColor = 'rgba(224, 179, 255, 0.4)';
+    }
+}
+
+// تحديث واجهة منطقة الإفلات
+function updateDropZoneUI() {
+    if (selectedChemicals.length === 0) {
+        dropZone.innerHTML = 'اسحب المواد هنا أو انقر عليها';
+        dropZone.style.borderColor = 'rgba(224, 179, 255, 0.4)';
+        return;
+    }
+
+    dropZone.innerHTML = selectedChemicals.map(id => 
+        `<span class="chemical-tag clickable-tag" onclick="removeChemical('${id}')" title="انقر للإزالة">${id}</span>`
+    ).join(' + ');
 }
 
 function checkReaction() {
@@ -110,32 +152,31 @@ function checkReaction() {
         setTimeout(() => dropZone.classList.remove('success-flash'), 600);
     } else {
         document.getElementById('eq-text').innerText = "لا يوجد تفاعل";
-        document.getElementById('desc-text').innerText = `لا يوجد تفاعل معروف بين هذه المواد في المختبر.`;
+        document.getElementById('desc-text').innerText = `لا يوجد تفاعل معروف بين هذه المواد في المختبر حالياً.`;
         dropZone.style.borderColor = "#e74c3c";
     }
 }
 
 function resetApp() {
     selectedChemicals = [];
-    dropZone.innerHTML = 'اسحب المواد هنا أو انقر عليها';
-    dropZone.style.borderColor = 'rgba(224, 179, 255, 0.4)';
+    updateDropZoneUI();
     document.getElementById('resultPanel').style.display = 'none';
 }
 
-// 5. بناء التبويب الثاني (الموسوعة والنافذة المنبثقة)
+// 6. موسوعة التفاعلات (التبويب الثاني)
 function renderReadyReactions() {
     const container = document.getElementById('readyReactions');
-    
-    // مسح المحتوى القديم تماماً (حذفنا سطر إضافة العنوان "موسوعة التفاعلات" لتجنب التكرار)
-    container.innerHTML = '';
+    container.innerHTML = ''; 
     const types = [...new Set(reactions.map(r => r.type))];
 
     types.forEach(type => {
         const section = document.createElement('div');
         section.className = 'reaction-category-section';
+        const definition = typeDefinitions[type] || 'تفاعل كيميائي أساسي.';
+        
         section.innerHTML = `
             <h3>${type}</h3>
-            <p class="type-definition">${typeDefinitions[type] || 'تفاعل كيميائي أساسي.'}</p>
+            <p class="type-definition">${definition}</p>
         `;
         
         const grid = document.createElement('div');
@@ -153,7 +194,7 @@ function renderReadyReactions() {
     });
 }
 
-// وظائف النافذة المنبثقة (Modal)
+// 7. النافذة المنبثقة (Modal)
 function showModal(r) {
     let modal = document.getElementById('reactionModal');
     if (!modal) {
@@ -165,10 +206,10 @@ function showModal(r) {
     modal.innerHTML = `
         <div class="modal-content">
             <h3>تفاصيل التفاعل</h3>
-            <div class="detail-item"><strong>المواد المتفاعلة:</strong> ${r.reactants.join(' و ')}</div>
-            <div class="detail-item"><strong>المعادلة الرمزية:</strong> <span style="direction:ltr; display:inline-block;">${r.equation}</span></div>
-            <div class="detail-item"><strong>نوع التفاعل:</strong> ${r.type}</div>
-            <div class="detail-item"><strong>الشرح العلمي:</strong> ${r.desc}</div>
+            <div class="detail-item"><strong>المواد:</strong> ${r.reactants.join(' و ')}</div>
+            <div class="detail-item"><strong>المعادلة:</strong> <span style="direction:ltr; display:inline-block;">${r.equation}</span></div>
+            <div class="detail-item"><strong>النوع:</strong> ${r.type}</div>
+            <div class="detail-item"><strong>الشرح:</strong> ${r.desc}</div>
             <hr>
             <button class="close-modal" onclick="closeModal()">إغلاق النافذة</button>
         </div>
@@ -180,14 +221,5 @@ function closeModal() {
     document.getElementById('reactionModal').style.display = 'none';
 }
 
-// التشغيل الابتدائي
-window.onload = init;
-// وظيفة شاشة التحميل
-window.addEventListener('load', function() {
-    const preloader = document.getElementById('preloader');
-    
-    // انتظر ثانيتين ليعرض المستخدم جمالية الشعار ثم اختفِ
-    setTimeout(() => {
-        preloader.classList.add('preloader-hidden');
-    }, 2000); 
-});
+// التشغيل
+init();
