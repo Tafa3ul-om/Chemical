@@ -3,7 +3,8 @@ const chemicalsData = {
     elements: [
         { id: 'Zn', label: 'خارصين' }, { id: 'Fe', label: 'حديد' },
         { id: 'Cu', label: 'نحاس' }, { id: 'Al', label: 'ألمنيوم' },
-        { id: 'Na', label: 'صوديوم' }, { id: 'O2', label: 'أكسجين' }
+        { id: 'Na', label: 'صوديوم' }, { id: 'O2', label: 'أكسجين' },
+        { id: 'Mg', label: 'ماغنيسيوم' }, { id: 'Cl2', label: 'كلور' } 
     ],
     compounds: [
         { id: 'HCl', label: 'حمض الهيدروكلوريك' }, { id: 'H2SO4', label: 'حمض الكبريتيك' },
@@ -47,18 +48,81 @@ const reactions = [
 { reactants: ['NH3', 'H2O'], equation: 'NH₃ + H₂O ⇌ NH₄OH', type: 'تفاعل ذوبان', desc: 'ذوبان الأمونيا في الماء لإنتاج هيدروكسيد الأمونيوم.' },
 { reactants: ['CH4', 'O2'], equation: 'CH₄ + 2O₂ → CO₂ + 2H₂O', type: 'أكسدة واختزال', desc: 'تفاعل طارد للحرارة ينتج عنه ثاني أكسيد الكربون وبخار ماء.' },
 { reactants: ['Fe', 'O2'], equation: '4Fe + 3O₂ → 2Fe₂O₃', type: 'تأكسد', desc: 'تفاعل الحديد مع الأكسجين في وجود الرطوبة يكوّن الصدأ.' },
+{ reactants: ['Mg', 'O2'], equation: '2Mg  +  O2 ​ →  2MgO', type: 'تأكسد', desc: 'تفاعل قوي وسريع يطلق حرارة وضوء ويكون مسحوق أبيض  .' },
+{ reactants: ['Mg', 'HCl'], equation: 'Mg  +  2HCl  →  MgCl₂  +  H₂​', type: 'تفاعل إحلال بسيط', desc: 'يحدث تفاعل شديد طارد للحرارة .' },
+{ reactants: ['Mg', 'H2SO4'], equation: 'Mg  +  H₂SO₄​  →  MgSO₄  ​+  H2​', type: 'تفاعل إحلال بسيط', desc: 'تفاعل شديد طارد للحرارة .' },
+{ reactants: ['Mg', 'H2O'], equation: 'Mg  +  2H₂​​O  →  Mg(OH)₂​  +  H₂​', type: 'تفاعل اتحاد مباشر', desc: 'يتفاعل الماغنيسيوم ببطء مع الماء الدافئ لكنه يتفاعل بعنف مع الماء الساخن مشكلاً هيدروكسيد الماغنيسيوم  .' },
+{ reactants: ['Mg', 'CO2'], equation: '2Mg  +  CO₂​  →  2MgO  +  C', type: 'أكسدة واختزال', desc: 'يؤدي تفاعل الماغنسيوم المشتعل مع ثاني أكسيد الكربون إلى اختزال الغاز وإنتاج أكسيد الماغنسيوم (مسحوق أبيض) وترسيب الكربون (مسحوق أسود).' },
+{ reactants: ['Na', 'Cl2'], equation: '2Na + Cl₂ → 2NaCl', type: 'تفاعل اتحاد مباشر', desc: 'تفاعل عنيف ينتج عنه ملح الطعام (كلوريد الصوديوم).' },
+{ reactants: ['Fe', 'Cl2'], equation: '2Fe + 3Cl₂ → 2FeCl₃', type: 'تفاعل اتحاد مباشر', desc: 'تفاعل الحديد المسخن مع الكلور لتكوين كلوريد الحديد III ذو اللون البني.' },
+{ reactants: ['Zn', 'Cl2'], equation: 'Zn + Cl₂ → ZnCl₂', type: 'تفاعل اتحاد مباشر', desc: 'اتحاد مباشر بين الخارصين والكلور لإنتاج ملح كلوريد الخارصين.' },
+{ reactants: ['Al', 'Cl2'], equation: '2Al + 3Cl₂ → 2AlCl₃', type: 'تفاعل اتحاد مباشر', desc: 'تفاعل الألومنيوم مع الكلور لإنتاج كلوريد الألومنيوم.' },
+{ reactants: ['Cu', 'Cl2'], equation: 'Cu + Cl₂ → CuCl₂', type: 'تفاعل اتحاد مباشر', desc: 'تفاعل النحاس مع الكلور لإنتاج كلوريد النحاس II.' },
+{ reactants: ['Mg', 'Cl2'], equation: 'Mg + Cl₂ → MgCl₂', type: 'تفاعل اتحاد مباشر', desc: 'يحترق المغنيسيوم في جو من غاز الكلور منتجاً ملح كلوريد المغنيسيوم.' },
+{ reactants: ['H2', 'Cl2'], equation: 'H₂ + Cl₂ → 2HCl', type: 'تفاعل اتحاد مباشر', desc: 'يتحد الغازان لتكوين غاز كلوريد الهيدروجين الذي يذوب في الماء مكوناً حمض الهيدروكلوريك.' },
+{ reactants: ['NaOH', 'Cl2'], equation: '2NaOH + Cl₂ → NaCl + NaClO + H₂O', type: 'أكسدة واختزال', desc: 'يتفاعل الكلور مع هيدروكسيد الصوديوم البارد لتكوين ملح الطعام وهيبوكلوريت الصوديوم (المبيض).' },
+{ reactants: ['H2O', 'Cl2'], equation: 'Cl₂ + H₂O ⇌ HCl + HClO', type: 'تفاعل إحلال بسيط', desc: 'يذوب الكلور في الماء مكوناً حمض الهيدروكلوريك وحمض الهيبوكلوروز (يستخدم في تعقيم المياه).' },
+{ reactants: ['NH3', 'Cl2'], equation: '8NH₃ + 3Cl₂ → 6NH₄Cl + N₂', type: 'أكسدة واختزال', desc: 'تفاعل الأمونيا مع غاز الكلور ينتج عنه سحب بيضاء من كلوريد الأمونيوم وانطلاق غاز النيتروجين.' },
+{ reactants: ['CaCO3', 'Cl2'], equation: 'CaCO₃ + Cl₂ + H₂O → CaCl₂ + CO₂ + HOCl', type: 'تفاعل إحلال مزدوج', desc: 'يتفاعل الكلور مع الكربونات في وسط مائي لإنتاج كلوريد الكالسيوم وغاز ثاني أكسيد الكربون.' },
+{ reactants: ['Al', 'H2O'], equation: '2Al + 6H₂O → 2Al(OH)₃ + 3H₂↑', type: 'تفاعل إحلال بسيط', desc: 'يتفاعل الألومنيوم مع الماء منتجاً هيدروكسيد الألومنيوم وغاز الهيدروجين.' },
+{ reactants: ['Fe', 'H2O'], equation: '3Fe + 4H₂O → Fe₃O₄ + 4H₂↑', type: 'تفاعل إحلال بسيط', desc: 'تفاعل الحديد مع بخار الماء الساخن لتكوين أكسيد الحديد المغناطيسي.' },
+{ reactants: ['Al', 'H2SO4'], equation: '2Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂↑', type: 'تفاعل إحلال بسيط', desc: 'يحل الألومنيوم محل هيدروجين حمض الكبريتيك مكوناً كبريتات الألومنيوم.' },
+{ reactants: ['Fe', 'HNO3'], equation: 'Fe + 4HNO₃ → Fe(NO₃)₃ + NO + 2H₂O', type: 'أكسدة واختزال', desc: 'تفاعل الحديد مع حمض النيتريك المخفف لإنتاج نترات الحديد III وغاز أكسيد النيتريك.' },
+{ reactants: ['Mg', 'HNO3'], equation: 'Mg + 4HNO₃ → Mg(NO₃)₂ + 2NO₂ + 2H₂O', type: 'أكسدة واختزال', desc: 'تفاعل المغنيسيوم مع حمض النيتريك المركز لإنتاج أبخرة بنيّة من ثاني أكسيد النيتروجين.' },
+{ reactants: ['Cu', 'O2'], equation: '2Cu + O₂ → 2CuO', type: 'تأكسد', desc: 'تأكسد النحاس عند تسخينه في الهواء لتكوين أكسيد النحاس الأسود.' },
+{ reactants: ['Al', 'O2'], equation: '4Al + 3O₂ → 2Al₂O₃', type: 'تأكسد', desc: 'يتفاعل الألومنيوم مع الأكسجين لتكوين طبقة واقية من أكسيد الألومنيوم.' },
+{ reactants: ['Zn', 'O2'], equation: '2Zn + O₂ → 2ZnO', type: 'تأكسد', desc: 'احتراق الخارصين في الأكسجين لإنتاج أكسيد الخارصين الأبيض.' },
+{ reactants: ['Mg', 'CO2'], equation: '2Mg + CO₂ → 2MgO + C', type: 'أكسدة واختزال', desc: 'يستمر المغنيسيوم في الاحتراق داخل ثاني أكسيد الكربون منتجاً أكسيد المغنيسيوم وفحم أسود.' },
+{ reactants: ['NH3', 'H2SO4'], equation: '2NH₃ + H₂SO₄ → (NH₄)₂SO₄', type: 'تفاعل تعادل', desc: 'تفاعل غاز الأمونيا مع حمض الكبريتيك لإنتاج سماد كبريتات الأمونيوم.' },
+{ reactants: ['NH3', 'HNO3'], equation: 'NH₃ + HNO₃ → NH₄NO₃', type: 'تفاعل تعادل', desc: 'تفاعل الأمونيا مع حمض النيتريك لإنتاج نترات الأمونيوم.' },
+{ reactants: ['CaCO3', 'CO2', 'H2O'], equation: 'CaCO₃ + CO₂ + H₂O → Ca(HCO₃)₂', type: 'تفاعل اتحاد مباشر', desc: 'تحول كربونات الكالسيوم إلى بيكربونات كالسيوم ذائبة عند مرور ثاني أكسيد الكربون في الماء.' },
+{ reactants: ['Al', 'NaOH', 'H2O'], equation: '2Al + 2NaOH + 6H₂O → 2Na[Al(OH)₄] + 3H₂↑', type: 'تفاعل إحلال بسيط', desc: 'تفاعل الألومنيوم مع هيدروكسيد الصوديوم لإنتاج ألومينات الصوديوم وغاز الهيدروجين.' },
+{ reactants: ['Zn', 'NaOH', 'H2O'], equation: 'Zn + 2NaOH + 2H₂O → Na₂[Zn(OH)₄] + H₂↑', type: 'تفاعل إحلال بسيط', desc: 'تفاعل الخارصين مع القواعد القوية لإنتاج زنكات الصوديوم.' },
+{ reactants: ['NH3', 'O2'], equation: '4NH₃ + 5O₂ → 4NO + 6H₂O', type: 'أكسدة واختزال', desc: 'احتراق الأمونيا في وجود الأكسجين لإنتاج أكسيد النيتريك وبخار الماء.' },
 { reactants: ['H2O', 'CO2'], equation: 'CO₂ + H₂O ⇌ H₂CO₃', type: 'تفاعل ذوبان', desc: 'ذوبان ثاني أكسيد الكربون في الماء يكوّن حمض الكربونيك الضعيف.' }
 
 ];
 let selectedChemicals = [];
 
-// 2. شاشة التحميل (Preloader)
-window.addEventListener('load', function() {
+// --- وظيفة شاشة التحميل المطورة ---
+function handlePreloader() {
     const preloader = document.getElementById('preloader');
+    if (!preloader) return;
+
+    // تحديد وقت البداية
+    const startTime = Date.now();
+    const minimumDisplayTime = 2000; // ثانيتين بالملي ثانية
+
+    function fadeOut() {
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - startTime;
+
+        if (elapsedTime >= minimumDisplayTime) {
+            // إذا مرت الثانيتين فعلاً، اختفِ الآن
+            preloader.classList.add('preloader-hidden');
+        } else {
+            // إذا كانت الصفحة سريعة جداً، انتظر حتى تكمل الثانيتين
+            setTimeout(() => {
+                preloader.classList.add('preloader-hidden');
+            }, minimumDisplayTime - elapsedTime);
+        }
+    }
+
+    // انتظر تحميل الصفحة بالكامل أولاً
+    if (document.readyState === 'complete') {
+        fadeOut();
+    } else {
+        window.addEventListener('load', fadeOut);
+    }
+
+    // أمان إضافي: لو تعطل التحميل لأي سبب، اختفِ بعد 4 ثوانٍ كحد أقصى
     setTimeout(() => {
-        if (preloader) preloader.classList.add('preloader-hidden');
-    }, 2000);
-});
+        preloader.classList.add('preloader-hidden');
+    }, 4000);
+}
+
+// تشغيل الوظيفة فوراً
+handlePreloader();
 
 // 3. إدارة التبويبات
 document.getElementById('btn-creation').onclick = function() { switchTab('creation-tab', this); };
