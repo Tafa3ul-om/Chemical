@@ -216,7 +216,8 @@ function checkReaction() {
         setTimeout(() => dropZone.classList.remove('success-flash'), 600);
     } else {
         document.getElementById('eq-text').innerText = "لا يوجد تفاعل";
-        document.getElementById('desc-text').innerText = `لا يوجد تفاعل معروف بين هذه المواد في المختبر حالياً.`;
+        document.getElementById('type-text').innerText = "_";
+        document.getElementById('desc-text').innerText = "لا يوجد تفاعل معروف لهذه المواد في الظروف الطبيعية";
         dropZone.style.borderColor = "#e74c3c";
     }
 }
@@ -287,3 +288,4 @@ function closeModal() {
 
 // التشغيل
 init();
+
